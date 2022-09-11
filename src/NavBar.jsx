@@ -1,0 +1,24 @@
+import React from 'react';
+import { HiOutlineShoppingBag } from 'react-icons/hi';
+import { Link } from "react-router-dom";
+
+function NavBar({ productCount }) {
+	return (
+		<div className="p-4 bg-white">
+			<div className="flex justify-between max-w-6xl items-center mx-auto">
+				<img
+					className="w-40 h-20"
+					src="https://s3-ap-southeast-1.amazonaws.com/p2swebsite/images/smeKhabar/news/amazon_1618225124036_113.jpg"
+				/>
+				<Link to="/cart/">
+        <div className="relative">
+				<HiOutlineShoppingBag className="text-primary-default w-14 h-14"/>
+				<span className="absolute top-5 left-6 text-primary-default text-xl">{productCount}</span>
+          </div>
+		  </Link>
+			</div>
+		</div>
+	);
+}
+
+export default NavBar;
