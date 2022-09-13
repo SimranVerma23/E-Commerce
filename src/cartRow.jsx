@@ -3,7 +3,7 @@ import Button from "./Button";
 
 function CartRow(){
   return(
-    		<div className="px-96">
+    		<div className="px-96 m-10">
 			<div className="flex flex-col border border-2 border-gray-400">
 				<div className="p-4 bg-gray-200 border border-b-2 border-gray-400 text-center">
 					<h1 className="text-2xl font-bold">Cart Totals</h1>
