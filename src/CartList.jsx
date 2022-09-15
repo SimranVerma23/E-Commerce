@@ -3,7 +3,7 @@ import React from 'react';
 function CartList() {
 	return (
 		<>
-			<div className="flex flex-col border border-2 m-20 bg-white">
+			<div className="flex flex-col border-2 m-20 bg-white">
 				<div className="flex justify-between border border-b-2 p-4 bg-gray-200">
 					<div className="mx-auto">
 						<h1 className="text-xl font-bold">Product</h1>
