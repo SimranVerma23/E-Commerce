@@ -2,7 +2,7 @@ import React from 'react';
 
 function CartList() {
 	return (
-		<>
+		<div>
 			<div className="flex flex-col border-2 m-20 bg-white">
 				<div className="flex justify-between border border-b-2 p-4 bg-gray-200">
 					<div className="mx-auto">
@@ -79,7 +79,7 @@ function CartList() {
 					</div>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }
 

@@ -6,8 +6,8 @@ import CartRow from "./CartRow"
 function CartPage() {
   return (
     <div className="flex flex-col">
-      <CartList />
-      <CartRow />
+      <CartList/>
+      <CartRow/>
     </div>
   );
 
