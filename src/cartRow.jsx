@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from './Button';
 
-function CartRow() {
+function cartRow() {
   return (
     <div className="px-96 m-10">
       <div className="flex flex-col border border-2 border-gray-400 bg-white">
@@ -24,4 +24,4 @@ function CartRow() {
   );
 }
 
-export default CartRow;
+export default cartRow;

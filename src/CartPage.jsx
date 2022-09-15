@@ -1,13 +1,13 @@
 import React from 'react';
 import CartList from "./CartList";
-import CartRow from "./CartRow"
+import cartRow from "./cartRow"
 
 
 function CartPage() {
   return (
     <div className="flex flex-col">
       <CartList/>
-      <CartRow/>
+      <cartRow/>
     </div>
   );
 
