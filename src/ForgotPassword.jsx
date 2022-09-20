@@ -26,7 +26,7 @@ function ForgotPassword(){
   
   
     return(
-      <div className='flex flex-col mx-auto max-w-6xl bg-white p-20 m-20'>
+      <div className='flex flex-col mx-auto max-w-6xl bg-white  p-10 sm:p-20 m-20'>
         <h1 className='text-4xl font-bold mb-4 text-gray-600'>Forgot Password</h1>
         <form onSubmit={handleSubmit} className=" flex flex-col border-2 border-gray-200 p-5 rounded-md">
           <label className='text-lg font-bold text-gray-600 mb-2' htmlFor='email'>Email Id<span className='text-red-400'>*</span></label>
