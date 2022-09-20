@@ -11,10 +11,12 @@ module.exports = {
     },
     colors:{
       white:colors.white,
+      blue:colors.blue,
       gray:colors.gray,
       black:colors.black,
       green:colors.green,
       orange:colors.orange,
+      red:colors.red,
       primary:{
         default:'#ff5151',
         dark:'#a50404'
