@@ -6,7 +6,7 @@ import * as Yup from 'yup';
 
 function ForgotPassword(){
     function callSignupApi(values){
-        console.log(email);
+        console.log(values.email);
      }
   
      const schema =  Yup.object().shape({
@@ -33,7 +33,7 @@ function ForgotPassword(){
           <input className='p-4 grow border-2 border-gray-200 mb-2' value={values.email} onChange={handleChange} onBlur={handleBlur} id='email' name='email' type='email' />
           { touched.email && errors.email && <div className='text-red-400'>{errors.email}</div>}
             <div>
-           <button className='text-2xl text-white bg-primary-default rounded-md py-4 px-8 mb-2' onClick={handleSubmit}>Reset Password</button>
+           <button className='text-2xl text-white bg-primary-default rounded-md py-4 px-8 mb-2' type='submit'>Reset Password</button>
            </div>
         </form>
   

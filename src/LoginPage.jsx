@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 
 function LoginPage(){
     function callSignupApi(values){
-      console.log(password,email);
+      console.log(values.password,values.email);
    }
 
    const schema =  Yup.object().shape({
@@ -40,7 +40,7 @@ function LoginPage(){
         {touched.password && errors.password && <div className='text-red-400'>{errors.password}</div>}
         <Link className='text-xl text-red-400 text-end self-end' to="/forgot/">forgot password</Link>
           <div>
-         <button className='text-2xl text-white bg-primary-default rounded-md py-4 px-8 mb-2' onClick={handleSubmit}>Login</button>
+         <button className='text-2xl text-white bg-primary-default rounded-md py-4 px-8 mb-2' type='submit'>Login</button>
 
          </div>
         <h1 className='text-xl text-gray-600 text-semibold'>don't have an account?<Link className='text-blue-400 text-xl text-semibold' to="/signup/">Sign Up</Link></h1>
