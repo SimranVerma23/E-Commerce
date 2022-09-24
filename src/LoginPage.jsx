@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link} from "react-router-dom";
-import { useFormik } from 'formik';
+import { useFormik } from "formik";
 import * as Yup from 'yup';
 
 
@@ -15,7 +15,7 @@ function LoginPage(){
      password:Yup.string().min(8).required(),
    })
    
-   const {handleSubmit, handleChange,values,handleBlur ,errors , touched} = useFormik({
+   const {handleSubmit, handleChange,values,handleBlur ,errors , touched} = useFormik ({
     initialValues:{
       password:"",
       email:"",
