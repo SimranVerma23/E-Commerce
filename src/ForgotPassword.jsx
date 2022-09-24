@@ -1,10 +1,11 @@
 import React from 'react';
-import { useFormik } from 'formik';
+import { useFormik } from "formik";
 import * as Yup from 'yup';
 
 
 
 function ForgotPassword(){
+
     function callSignupApi(values){
         console.log(values.email);
      }
@@ -13,7 +14,7 @@ function ForgotPassword(){
        email:Yup.string().email('Invalid email').required(),
      })
      
-     const {handleSubmit, handleChange,values,handleBlur ,errors , touched} = useFormik({
+     const { handleSubmit, handleChange, values, handleBlur ,errors , touched } = useFormik({
       initialValues:{
         email:"",
   
