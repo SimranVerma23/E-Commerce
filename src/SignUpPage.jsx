@@ -7,7 +7,8 @@ import * as Yup from 'yup';
 
 function SignUpPage(){
 
-   function callSignupApi(values){
+  function callSignupApi(values) {
+     
       console.log(values.username,values.password,values.email);
    }
 
