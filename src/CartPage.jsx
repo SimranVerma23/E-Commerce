@@ -1,13 +1,15 @@
-import React from 'react';
-import CartList from "./CartList";
-import CartRow from './CartRow';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
+import { getProductData } from './Api';
+import CartList from './CartList';
 
+function CartPage({product , saveData ,cart}) {
 
-function CartPage() {
+  console.log("my cart", product, saveData);
+ 
   return (
     <div className="flex flex-col">
-      < CartList />
-      <CartRow/>
+      < CartList product={product} saveData={ saveData} cart={cart} />
     </div>
   );
 

@@ -3,8 +3,8 @@ import { useParams, Link } from 'react-router-dom';
 import { getProductData } from './Api';
 import Loading from './Loading';
 import NotFound from './NotFound';
-
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
+
 
 function ProductDetail({onAddToCart}) {
 	const [product, setProduct] = useState();
@@ -42,7 +42,7 @@ function ProductDetail({onAddToCart}) {
 
 	return (
 		<>
-			<div className=" p-4 sm:px-20 sm:pb-20 bg-gray-300 mb-4 shadow shadow-2xl shadow-gray-900 ">
+			<div className=" py-5 sm:px-20 sm:pb-20 bg-gray-300 mb-4 shadow shadow-2xl shadow-gray-900 ">
 				<Link to="/">
 					<HiArrowCircleLeft className=" text-3xl sm:text-6xl" />
 				</Link>

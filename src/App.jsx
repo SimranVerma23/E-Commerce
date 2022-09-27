@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect } from 'react';
 import ProductBox from './ProductBox';
 import NavBar from './NavBar';
 import NotFound from './NotFound';
@@ -10,13 +10,17 @@ import SignUpPage from './SignUpPage';
 import LoginPage from './LoginPage';
 import LinkBar from './LinkBar';
 import ForgotPassword from './ForgotPassword';
+import { getProductData } from './Api';
 
 
 function App() {
   const saveDataString = localStorage.getItem('my-cart') || '{}';
-	const saveData = JSON.parse(saveDataString);
+  const saveData = JSON.parse(saveDataString);
 
   const [cart, setCart] = useState(saveData);
+
+  const [product, setProduct] = useState([]);
+  
 
   function handleAddToCart(productId, count) {
     console.log('productId', productId, 'count', count);
@@ -30,6 +34,24 @@ function App() {
   const totalCount = Object.keys(cart).reduce(function(previous, current) {
     return previous + cart[current];
   }, 0);
+
+
+  
+     useEffect(function () {
+    const promises = Object.keys(cart).map(function (productId) {
+      return getProductData(productId)
+    });
+
+    const badiPromise = Promise.all(promises);
+    badiPromise.then(function (product) {
+      console.log("cart ka data aa gaya", product);
+      setProduct(product);
+    })
+  },[] );
+
+
+
+
   return (
     <>
       <NavBar productCount={totalCount} />
@@ -43,7 +65,7 @@ function App() {
               element={<ProductDetail onAddToCart={handleAddToCart} />}
             />
             <Route path="*" element={<NotFound />} />
-			<Route path='/cart/' element={<CartPage/>}/>
+            <Route path='/cart/' element={<CartPage product={product} saveData={saveData} cart={setCart} />}/>
       <Route path="/signup/" element={<SignUpPage/>}/>
       <Route path='/login/' element={<LoginPage/>}/>
       <Route path='/forgot/' element={<ForgotPassword/>}/>
