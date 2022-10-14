@@ -1,16 +1,27 @@
 import React from 'react';
+import { useContext } from 'react';
 import { Link } from "react-router-dom";
+import { UserContext } from "./Contexts";
 
-function LinkBar() {
+function LinkBar({ setCart }) {
+
+  const { setUser } = useContext(UserContext);
+
+  function handleLogOut() {
+    localStorage.removeItem("token");
+    setUser(undefined);
+    localStorage.removeItem("my-cart");
+    setCart({});
+  }
+
   return (
-    <div className="bg-gray-700 py-4 px-8">
-    <div className=" max-w-6xl mx-auto flex gap-4">
-      <Link to="/" className="text-white text-2xl">Home</Link>
-      <Link to ="/signup/" className="text-white text-2xl">Signup</Link>
-      <Link to ="/login/" className="text-white text-2xl">Login</Link>
+    <div className="md:max-w-6xl md:bg-gray-none md:mx-auto flex  flex-col md:items-center md:flex-row md:justify-end gap-4">
+      <Link className="text-2xl" to="/">Home</Link>
+      <Link className="text-2xl" to="/signup/">Abouts</Link>
+      <Link className="text-2xl" to="/login/">Contact</Link>
+      <button className="text-2xl px-4 py-2 bg-gray-500 text-white rounded-md" onClick={handleLogOut}>LogOut</button>
 
     </div>
-      </div>
 
   );
 

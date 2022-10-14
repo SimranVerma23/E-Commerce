@@ -1,70 +1,59 @@
 import React from 'react';
-import { useState } from 'react';
-import {HiX } from 'react-icons/hi';
 
 
 
-function CartRow({ thumbnail, price, title, id, saveData , cart }) {
-	const count = saveData;
-   const [visiblity, setVisiblity] = useState(true);
-	const [quantity, setQuantity] = useState(count[id]);
-	console.log("cart", cart);
 
-	function handleInputChange(event) {
-		setQuantity(+event.target.value);
+function CartRow({ thumbnail, price, title, id, quantity, onChange,onRemove }) {
+	 
+
+	function handleChange(event) {
+		onChange(id, +event.target.value);
 	}
 	
-	function handleClick() {
-		setVisiblity(false);
-		console.log(visiblity);
-		myFunc(id);
+	function handleRemove() {
+		onRemove(id);		
 	}
-	const myFunc = (id) => {
-    const myObj = localStorage.getItem('my-cart');
-    let keys = Object.keys(JSON.parse(myObj));
-    const index = keys.indexOf(id.toString());
-    keys = keys.filter((a) => +a !== id);
-    let values = Object.values(JSON.parse(myObj));
-    values.splice(index, 1);
-
-    const obj = {};
-    keys.forEach((value, index) => {
-      obj[value] = values[index];
-    });
-    localStorage.clear();
-    localStorage.setItem('my-cart', JSON.stringify(obj));
-     cart(obj);
-  };
-
-
-
-	return (visiblity ?
-		(
-			<div className="flex justify-between items-center border-b-2 sm:p-10">
-				<div className="flex items-center sm:gap-32">
-					<HiX className="text-4xl border-2 rounded-full" onClick={handleClick}>
-						X
-					</HiX>
-					<img
-						className="w-20 h-20 aspect-square sm:mx-auto"
-						src={thumbnail}
-					/>
-					<h1 className="text-xl font-bold text-primary-default py-2">
-						{title}
-					</h1>
-				</div>
-				<div className="flex justify-between gap-32">
-					<h1 className="text-xl font-bold py-2">{price}</h1>
-					<input
-						type='number'
-						value={quantity}
-						onChange={handleInputChange}
-						className=" text-xl font-bold w-10 h-10 text-center border border-2"
-					/>
-					<h1 className="text-xl font-bold py-2">{price * quantity}</h1>
-				</div>
-			</div>) : <div className='hidden'></div>
-	);
+	
+    return (<>
+		<div className="md:hidden flex flex-col">
+			<div className="self-end">
+				<button onClick={handleRemove} productId={id} className="m-4 h-10 w-10 rounded-full border-2">X</button>
+			</div>
+			<img src={thumbnail} className="m-4 mx-auto aspect-square h-20 w-20" />
+			<div className="flex justify-between border-y-2 border-gray-500 p-6">
+				<h1 className="text-xl font-semibold text-gray-700">Product:</h1>
+				<h1 className="text-xl font-semibold text-red-700">{title}</h1>
+			</div>
+			<div className="flex justify-between border-b-2 border-gray-500 p-6">
+				<h1 className="text-xl font-semibold text-gray-700">Price:</h1>
+				<h1 className="text-xl font-semibold text-gray-700">{price}</h1>
+			</div>
+			<div className="flex justify-between border-b-2 border-gray-500 p-6">
+				<h1 className="text-xl font-semibold text-gray-700">Quantity:</h1>
+				<input type="number" value={quantity} productId={id} onChange={handleChange} className="h-10 w-10 border border-gray-400 text-center" />
+			</div>
+			<div className="flex justify-between border-gray-500 p-6 border-b-2">
+				<h1 className="text-xl font-semibold text-gray-700">Subtotal</h1>
+				<h1 className="text-xl font-semibold text-gray-700">{price * quantity}</h1>
+			</div>
+		</div>
+         
+		
+		<div className="hidden md:block">
+			<div className="flex items-center justify-between py-4 border-b-2 border-gray-500">
+				 <div className="flex gap-8">
+					<button onClick={handleRemove} productId={id} className="m-4 h-10 w-10 rounded-full border-2">X</button>
+					<img src={thumbnail} className="aspect-square h-20 w-20"/>
+				 </div>
+				 <h1 className="text-xl font-semibold text-red-700 grow ml-10">{title}</h1>
+				 <h1 className="text-xl font-semibold text-gray-700 w-24">{price}</h1>
+				 <div className='w-24'>
+					<input type="number" value={quantity} productId={id} onChange={handleChange} className="h-10 w-10 border border-gray-400 text-center mx-auto" />
+				 </div>
+				 <h1 className="text-xl font-semibold text-gray-700 w-24">{price * quantity}</h1>
+			</div>
+		</div>
+	</> );
 
 }
 

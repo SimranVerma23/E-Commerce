@@ -3,61 +3,57 @@ import ProductList from './ProductList';
 import SearchBar from './SearchBar';
 import NoMatching from './NoMatching';
 import { getProductList } from "./Api"
-import Loading from "./Loading"
-import Button from "./Button"
-
-
+import Loading from "./Loading";
+import { range} from 'lodash';
+import { Link, useSearchParams } from 'react-router-dom';
 
 function ProductBox() {
-  const [queary, setQueary] = useState('');
-  const [sort, setSort] = useState('default');
-  const [productList, setProductList] = useState([]);
-  const [loading, setLoading]=useState(true);
+  const [productData, setProductData] = useState();
+  const [loading, setLoading] = useState(true);
+  
+  const [searchParams, setSearchParams] = useSearchParams();
+  const params = Object.fromEntries([...searchParams]);
+  let { queary, sort, sortType, page } = params;
 
-  useEffect(function() {
-    const xyz = getProductList();
-    xyz.then(function(products) {
-      console.log(products)
-      setProductList(products);
+  queary = queary || "";
+  sort = sort || "default"
+  page = +page || 1
+
+  useEffect(function () {
+    let sortBy;
+    let sortType;
+    if (sort == "title") {
+      sortBy ="title";
+    }
+    if (sort == "lowPrice") {
+      sortBy ="price";
+    }
+    if (sort == "highPrice") {
+      sortBy = "price";
+      sortType = "desc";
+    }
+    getProductList(sortBy , sortType , queary ,page).then(function(response) {
+     setProductData(response);
       setLoading(false);
-
     });
+  }, [sort ,sortType ,queary , page]);
 
-  }, []);
-
-  let data = productList.filter(function(items) {
-    const LowerCaseName = items.title.toLowerCase();
-    const LowerCaseQueary = queary.toLowerCase();
-    return LowerCaseName.indexOf(LowerCaseQueary) != -1;
-  });
   function HandleQuearyChange(event) {
-    setQueary(event.target.value);
+    setSearchParams({ ...params, queary: event.target.value, page: 1 }, {
+      replace: false
+    });
   }
   function HandleSortChange(event) {
-    setSort(event.target.value);
+    setSearchParams({ ...params, sort: event.target.value }, {
+      replace: false
+    });
   }
 
-  if (sort == "title") {
-    data.sort(function(x, y) {
-      return x.title < y.title ? -1: 1;
-    });
-  }
-  else if (sort == "lowPrice") {
-    data.sort(function(x, y) {
-      return x.price - y.price;
-    });
-  } else if (sort == "highPrice") {
-    data.sort(function(x, y) {
-      return y.price - x.price;
-    });
-
-  }
+ 
   if(loading){
     return <Loading/>
   }
-
-  
-  return (
+   return (
     <div className="bg-white max-w-6xl px-2 sm:px-9 py-12 mx-auto shadow shadow-xl shadow-gray-700 my-10">
       <h1 className="text-4xl sm:text-5xl text-center sm:text-left font-bold text-primary-default mb-4 px-9">Shop</h1>
       <div className="p-5 flex flex-col items-center gap-2 sm:gap-0 sm:flex-row sm:justify-between sm:px-9 sm:py-10">
@@ -75,13 +71,14 @@ function ProductBox() {
         </div>
       </div>
       <div className="px-9">
-        {data.length > 0 && <ProductList Products={data}/>}
-        {data.length == 0 && <NoMatching />}
-      </div>
+        {productData.data.length > 0 && <ProductList Products={productData.data}/>}
+         {productData.data.length == 0 && <NoMatching />}
+         </div>
       <div className="flex gap-2 px-9 my-10">
-      <Button>1</Button>
-      <Button>2</Button>
-      <Button>3</Button>
+         {range(1, productData.meta.last_page + 1).map((pageNo) => (<Link key={pageNo} to={"?" + new URLSearchParams({ ...params, page: pageNo })}
+           className={"px-4 py-2 m-2 " + (pageNo == page ? "bg-white text-red-600 border-2 border-red-600 " : "bg-red-600 text-white")}>{pageNo}
+           </Link>
+       ))}
 
       </div>
     </div>
@@ -89,5 +86,8 @@ function ProductBox() {
 
 
 }
+
+
+          //  className={"p-2 m-2 " + (pageNo === page ? " bg-white text-red-600 " : " bg-red-600 text-white")}>{pageNo}
 
 export default ProductBox;
