@@ -1,0 +1,34 @@
+{
+  "files": {
+    "src/Api.Js": [
+      {
+        "id": "321ddab5-d36b-4879-bc4e-d067698bcab9",
+        "line": 10,
+        "version": 229,
+        "index": 216
+      }
+    ],
+    "src/DropDown.jsx": [
+      {
+        "id": "82e35d25-45e0-4030-919e-543630adce47",
+        "line": 3,
+        "version": 209,
+        "index": 28
+      }
+    ],
+    "src/ProductBox.jsx": [
+      {
+        "id": "588a865f-389a-483b-8b6e-baa6b5c71674",
+        "line": 2,
+        "version": 6130,
+        "index": 52
+      },
+      {
+        "id": "9a4e98de-7ab7-48fe-96c4-fdc0b85960c5",
+        "line": 4,
+        "version": 6130,
+        "index": 130
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+import React from 'react';
+import { useContext } from 'react';
+import { Link } from "react-router-dom";
+import { UserContext } from "./Contexts";
+
+function LinkBar({ setCart }) {
+  
+  const {setUser} = useContext(UserContext);
+
+  function handleLogOut() {
+    localStorage.removeItem("token");
+    setUser(undefined); 
+   localStorage.removeItem("my-cart");
+    setCart({});
+  } 
+  
+  return (
+    <div className="md:max-w-6xl bg-gray-400 md:bg-gray-none md:mx-auto flex flex-col md:flex-row md:justify-end gap-4">
+        <button className="bg-green-500 text-white rounded-md px-4 py-2 hover:bg-green-600 hover:border-2 hover:border-white text-2xl" onClick={handleLogOut}>Log Out</button>
+        <Link className="bg-primary-default text-white px-4 py-2 rounded-md hover:primary-dark hover:border-2 hover:border-white text-2xl" to ="/signup/">Signup</Link>
+        <Link className="bg-green-500 text-white rounded-md px-4 py-2 hover:bg-green-600 hover:border-2 hover:border-white text-2xl" to ="/login/" >Login</Link>
+
+      </div>
+
+  );
+
+}
+
+export default LinkBar;
