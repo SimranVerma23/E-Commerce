@@ -1,0 +1,17 @@
+import React from 'react';
+import { Link } from "react-router-dom";
+
+function LinkBar() {
+  return (
+    <div className="md:max-w-6xl bg-gray-400 md:bg-gray-none md:mx-auto flex flex-col md:flex-row md:justify-end gap-4">
+        <Link to="/" className="text-2xl">Home</Link>
+        <Link to ="/signup/" className="text-2xl">Signup</Link>
+        <Link to ="/login/" className="text-2xl">Login</Link>
+
+      </div>
+
+  );
+
+}
+
+export default LinkBar;
