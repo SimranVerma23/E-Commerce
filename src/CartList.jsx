@@ -81,7 +81,7 @@ function CartList({ cart, updateCart }) {
 						APPLY COUPON
 					</button>
 				</div>
-				<button onClick={myUpdateCart} className="px-12 py-4 bg-red-200 text-gray-400 rounded-md font-bold text-xl hover:bg-gray-200">
+				<button onClick={myUpdateCart} className="px-12 py-4 bg-red-300 text-gray-400 rounded-md font-bold text-xl hover:bg-gray-200">
 					UPDATE CART
 				</button>
 			</div>

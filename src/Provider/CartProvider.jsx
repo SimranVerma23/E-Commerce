@@ -63,7 +63,7 @@ function CartProvider({ isLoggedIn , children}) {
   }, 0);
 
     return (
-        <CartContext.Provider value ={{ cart , addToCart , updateCart , cartCount }}>{children}</CartContext.Provider>
+        <CartContext.Provider value ={{ cart, addToCart , updateCart , cartCount }}>{children}</CartContext.Provider>
     )
 
 }

@@ -15,7 +15,7 @@ function CartRow({ product ,quantity, onChange,onRemove }) {
 	}
 	
     return (<>
-		<div className="md:hidden flex flex-col">
+		<div className="md:hidden flex flex-col ">
 			<div className="self-end">
 				<button onClick={handleRemove} productId={id} className="m-4 h-10 w-10 rounded-full border-2">X</button>
 			</div>
