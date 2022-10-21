@@ -14,49 +14,38 @@ import { HiMenu } from 'react-icons/hi';
 import AuthRoute from './AuthRoute';
 import UserRoute from './UserRoute';
 import Alert from './Alert';
-import UserProvider from '../Provider/UserProvider';
-import AlertProvider from '../Provider/AlertProvider';
+import UserProvider from './Provider/UserProvider';
+import AlertProvider from './Provider/AlertProvider';
+import CartProvider from './Provider/CartProvider';
 
 function App() {
-  const saveDataString = localStorage.getItem('my-cart') || '{}';
-  const saveData = JSON.parse(saveDataString);
-  const [cart, setCart] = useState(saveData);
  
-  function handleAddToCart(productId, count) {
-    console.log('productId', productId, 'count', count);
-    const oldCount = cart[productId] || 0;
-    const newCart = { ...cart, [productId]: oldCount + count }
-    updateCart(newCart);
+   const [isMenu, setIsMenu] = useState(false);
+  function handleMenuChange() {
+    console.log("status changed", isMenu);
+    setIsMenu(!isMenu);
   }
-  function updateCart(newCart) {
-    setCart(newCart)
-    const cartString = JSON.stringify(newCart);
-    localStorage.setItem('my-cart', cartString);
-  }
-
-  const totalCount = Object.keys(cart).reduce(function (previous, current) {
-    return previous + cart[current];
-  }, 0);
 
   return (
     <div>
       <UserProvider>
+        <CartProvider>
         <AlertProvider>
           <Alert />
-          <NavBar productCount={totalCount} setCart={setCart} />
-         <div className="flex flex-col h-screen overflow-y-scroll relative">
+          <NavBar />
+          <div className="flex flex-col h-screen overflow-y-scroll relative">
+             <HiMenu onClick={handleMenuChange} className="md:hidden"/>
+          {isMenu && <LinkBar />}
           <div className=" grow bg-secondary-default">
-
             <Routes>
-              <Route index element={<UserRoute><ProductBox /></UserRoute>} />
+              <Route index element={<ProductBox />} />
               <Route
                 path="/products/:id/"
-                element={<ProductDetail onAddToCart={handleAddToCart} />}
+                element={<ProductDetail/>}
               />
               <Route path="*" element={<NotFound />} />
-              <Route path='/cart/' element={<UserRoute><CartPage cart={cart} updateCart={updateCart} /></UserRoute>} />
-              <Route path="/signup/" element={<AuthRoute>
-                <SignUpPage /></AuthRoute>} />
+              <Route path='/cart/' element={<CartPage />} />
+              <Route path="/signup/" element={<AuthRoute><SignUpPage /></AuthRoute>} />
               <Route path='/login/' element={<AuthRoute><LoginPage/></AuthRoute>} />
               <Route path='/forgot/' element={<ForgotPassword />} />
 
@@ -65,6 +54,7 @@ function App() {
         </div>
           <Footer />
           </AlertProvider>
+          </CartProvider>
       </UserProvider>
     </div>
   );

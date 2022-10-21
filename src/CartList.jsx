@@ -1,37 +1,43 @@
-import React from 'react';
+import React , {useState , useEffect} from 'react';
 import CartRow from './CartRow';
 import { HiArrowCircleLeft } from 'react-icons/hi';
 import { Link } from "react-router-dom"
-import { useState } from 'react';
-import { useEffect } from 'react';
+import { WithCartProvider } from './WithProvider';
 
 
-function CartList({ product, updateCart, cart, setLoading }) { 
+
+function CartList({ cart, updateCart }) { 
+	console.log("cart", cart);
 	
-	const [localCart, setLocalCart] = useState(cart);
+	 const [quantityMap, setQuantityMap] = useState(cart);
 
-	useEffect(function () {
-		setLocalCart(cart)
-	}, [cart]);
+  const cartToQuantityMap = () =>
+    cart.reduce(
+      (m, cartItem) => ({ ...m, [cartItem.product.id]: cartItem.quantity }),
+      {}
+    );
 
-	function myUpdateCart() {
-		updateCart(localCart);
-		setLoading(true);
-	}
+  useEffect(
+    function () {
+      setQuantityMap(cartToQuantityMap());
+    },
+    [cart]
+  );
 
-	   function handleChange(productId,newValue) {
-		
-		console.log("newVale and productid", newValue, productId);
-		const newLocalCart = { ...localCart, [productId]: newValue };
-		setLocalCart(newLocalCart);
-	}
-	function handleRemove(productId) {
-		console.log("remove id", productId);
-		const newCart = { ...cart }
-		delete newCart[productId];
-		updateCart(newCart);
-		setLoading(true);
-	}
+  function handleChange(productId, newValue) {
+    const newQuantityMap = { ...quantityMap, [productId]: newValue };
+    setQuantityMap(newQuantityMap);
+  }
+
+  function myUpdateCart() {
+    updateCart(quantityMap);
+  }
+
+  function handleRemove(productId) {
+    const newQuantityMap = cartToQuantityMap();
+    delete newQuantityMap[productId];
+    updateCart(newQuantityMap);
+  }
 
 	 
 	return (<div>
@@ -44,9 +50,12 @@ function CartList({ product, updateCart, cart, setLoading }) {
 		<div className="md:mx-28 border-2 border-gray-500">
 				
 			<div className="md:hidden">
-				{product.length > 0 && product.map(function (items) {
-					return <CartRow key={items.id} quantity={localCart[items.id]} {...items} onRemove={handleRemove} onChange={handleChange} />
-				})}
+				{cart.map((cartItem)=>(
+					<CartRow key={cartItem.product.id} quantity={quantityMap[cartItem.product.id] || cartItem.quantity}
+						product = {cartItem.product}
+						onRemove={handleRemove}
+						onChange={handleChange} />
+				))}
 			</div>
   
 			<div className="hidden md:block">
@@ -56,10 +65,12 @@ function CartList({ product, updateCart, cart, setLoading }) {
 						<h1 className="text-xl font-semibold text-gray-700 w-24">Quantity</h1>
 						<h1 className="text-xl font-semibold text-gray-700 w-24">Subtotal</h1>
 				</div>
-				{product.length > 0 && product.map(function (items) {
-					return <CartRow key={items.id} {...items} quantity={localCart[items.id]} onRemove={handleRemove} onChange={handleChange} />
-				})}
-					
+				{cart.map((cartItem) => (
+					<CartRow key={cartItem.product.id} quantity={quantityMap[cartItem.product.id] || cartItem.quantity}
+						product = {cartItem.product}
+						onRemove={handleRemove}
+						onChange={handleChange} />
+				))}
 			</div>
 			<div className="flex flex-col gap-3 md:flex-row md:justify-between p-4">
 				<div className="flex justify-center gap-8">
@@ -75,8 +86,8 @@ function CartList({ product, updateCart, cart, setLoading }) {
 				</button>
 			</div>
 		</div>
-		<div className='md:self-end'>
-<div className="flex flex-col border-2 border-gray-700 sm:max-w-md md:mx-28 sm:my-4">
+		<div className='flex justify-end'>
+<div className="flex flex-col border-2 border-gray-700 w-full sm:max-w-md md:w-96 md:mx-28 sm:my-4">
   <h1 className="border-b-2 border-gray-700 py-4 pl-4 text-xl font-bold text-gray-700 bg-secondary-default">Cart Total</h1>
   <div className="flex gap-28 border-b-2 border-gray-700 py-4 pl-4">
     <h1 className="ml-2 text-xl font-semibold text-gray-700">Subtotal</h1>
@@ -93,5 +104,5 @@ function CartList({ product, updateCart, cart, setLoading }) {
 
 }
 
-export default CartList;
+export default WithCartProvider(CartList);
 

@@ -1,10 +1,10 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { UserContext } from "../src/Contexts";
-import Loading from "../src/Loading";
+import { UserContext } from "../Contexts";
+import Loading from "../Loading";
 
 function UserProvider({children}) {
-     const [userLoading, setUserLoading] = useState(true);
+    const [userLoading, setUserLoading] = useState(true);
   const [user, setUser] = useState();
 
     const token = localStorage.getItem("token");
@@ -34,7 +34,7 @@ function UserProvider({children}) {
   }
 
 
-    return <UserContext.Provider value={{ user, setUser }}>{children}</UserContext.Provider>
+    return <UserContext.Provider value={{ isLoggedIn:!!token , user, setUser }}>{children}</UserContext.Provider>
 }
 
 export default UserProvider;

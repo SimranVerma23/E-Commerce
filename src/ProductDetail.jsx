@@ -4,9 +4,10 @@ import { getProductData } from './Api';
 import Loading from './Loading';
 import NotFound from './NotFound';
 import { HiArrowCircleLeft, HiArrowCircleRight } from 'react-icons/hi';
+import { WithCartProvider } from './WithProvider';
 
 
-function ProductDetail({onAddToCart}) {
+function ProductDetail({addToCart}) {
 	const [product, setProduct] = useState();
 	const [loading, setLoading] = useState(true);
 	const [count, setCount] = useState(1);
@@ -31,7 +32,7 @@ function ProductDetail({onAddToCart}) {
 	}
 
 	function handleButtonChange() {
-		onAddToCart(+id ,+count);
+		addToCart(id ,count);
 	}
 	if (loading) {
 		return <Loading />;
@@ -87,7 +88,7 @@ function ProductDetail({onAddToCart}) {
 						{id > 1 && (
 							<Link
 								className="p-2 hover:bg-green-700 bg-green-400 border border-4 border-green-600 rounded-xl text-white flex items-center gap-2 text-2xl"
-								to={'/products/' + (id - 1)}
+								to={'/product/' + (id - 1)}
 							>
 								<HiArrowCircleLeft className="text-2xl" />Previous
 							</Link>
@@ -107,4 +108,4 @@ function ProductDetail({onAddToCart}) {
 	);
 }
 
-export default ProductDetail;
+export default WithCartProvider(ProductDetail);

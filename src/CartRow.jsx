@@ -3,8 +3,8 @@ import React from 'react';
 
 
 
-function CartRow({ thumbnail, price, title, id, quantity, onChange,onRemove }) {
-	 
+function CartRow({ product ,quantity, onChange,onRemove }) {
+	const { thumbnail, price, title, id, } = product;
 
 	function handleChange(event) {
 		onChange(id, +event.target.value);
